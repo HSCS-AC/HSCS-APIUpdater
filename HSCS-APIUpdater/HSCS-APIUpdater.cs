@@ -75,8 +75,9 @@ public class HSCS_APIUpdater : BackgroundService, IAssettoServerAutostart {
 
         foreach (var car in _entryCarManager.EntryCars) {
             if (car.Client == null) continue;
+            if (car.Client.Name!.Contains("Traffic")) continue;
             
-            _serverInfo.clients!.Add(car.Client!.Name!,
+            _serverInfo.clients!.Add(car.Client.Name!,
                 new ServerClient {name = car.Client.Name, steam_id = car.Client.Guid, car = car.Model}
             );
             
@@ -103,6 +104,8 @@ public class HSCS_APIUpdater : BackgroundService, IAssettoServerAutostart {
     }
 
     private void OnClientLoaded(ACTcpClient client, EventArgs args) {
+        if (client.Name!.Contains("Traffic")) return;
+        
         _serverInfo.clients.Add(client.Name,
             new ServerClient {name = client.Name, steam_id = client.Guid, car = client.EntryCar.Model}
         );
