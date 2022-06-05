@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <EnableDynamicLoading>true</EnableDynamicLoading>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\..\AssettoServer\AssettoServer\AssettoServer.csproj">
+            <Private>false</Private>
+            <ExcludeAssets>runtime</ExcludeAssets>
+        </ProjectReference>
+
+        <PackageReference Include="Serilog" Version="2.11.0" />
+    </ItemGroup>
+
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+        <Exec Command="copy /Y .\bin\Release\net6.0\HSCS-APIUpdater.dll ..\..\AssettoServer\AssettoServer\bin\Release\net6.0\win-x64\plugins\HSCS-APIUpdater\HSCS-APIUpdater.dll" />
+    </Target>
+
+</Project>
